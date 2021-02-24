@@ -1,1 +1,811 @@
-[]
+- table:
+    schema: public
+    name: barista
+  object_relationships:
+  - name: password_reset_code
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: password_reset_code
+        column_mapping:
+          id: barista_id
+  - name: verification_code
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: verification_code
+        column_mapping:
+          id: barista_id
+  array_relationships:
+  - name: bean_reviews
+    using:
+      foreign_key_constraint_on:
+        column: barista_id
+        table:
+          schema: public
+          name: bean_reviews
+  - name: recipe_reviews
+    using:
+      foreign_key_constraint_on:
+        column: barista_id
+        table:
+          schema: public
+          name: recipe_reviews
+  - name: recipes
+    using:
+      foreign_key_constraint_on:
+        column: barista_id
+        table:
+          schema: public
+          name: brew_logs
+  - name: recipesByBaristaId
+    using:
+      foreign_key_constraint_on:
+        column: barista_id
+        table:
+          schema: public
+          name: recipes
+  - name: refresh_tokens
+    using:
+      foreign_key_constraint_on:
+        column: barista_id
+        table:
+          schema: public
+          name: refresh_token
+  select_permissions:
+  - role: all_barista
+    permission:
+      columns:
+      - avatar
+      - display_name
+      - id
+      filter: {}
+  - role: barista
+    permission:
+      columns:
+      - avatar
+      - created_on
+      - display_name
+      - email
+      - id
+      - is_verified
+      filter:
+        id:
+          _eq: x-hasura-barista-id
+  - role: guest
+    permission:
+      columns:
+      - avatar
+      - display_name
+      - id
+      filter: {}
+  - role: unverified
+    permission:
+      columns:
+      - avatar
+      - created_on
+      - display_name
+      - email
+      - id
+      - is_verified
+      filter:
+        id:
+          _eq: x-hasura-barista-id
+- table:
+    schema: public
+    name: bean
+  array_relationships:
+  - name: bean_reviews
+    using:
+      foreign_key_constraint_on:
+        column: bean_id
+        table:
+          schema: public
+          name: bean_reviews
+  - name: recipes
+    using:
+      foreign_key_constraint_on:
+        column: bean_id
+        table:
+          schema: public
+          name: brew_logs
+  - name: recipesByBeanId
+    using:
+      foreign_key_constraint_on:
+        column: bean_id
+        table:
+          schema: public
+          name: recipes
+  select_permissions:
+  - role: all_barista
+    permission:
+      columns:
+      - id
+      - name
+      - company_name
+      - roast_type
+      - country_id
+      - farm_id
+      - process
+      - region
+      - varietal
+      - altitude
+      - profile_note
+      - img
+      - about
+      - rating
+      - price
+      - date_added
+      - date_updated
+      filter: {}
+  - role: barista
+    permission:
+      columns:
+      - about
+      - altitude
+      - company_name
+      - country_id
+      - date_added
+      - date_updated
+      - farm_id
+      - id
+      - img
+      - name
+      - price
+      - process
+      - profile_note
+      - rating
+      - region
+      - roast_type
+      - varietal
+      filter: {}
+  - role: guest
+    permission:
+      columns:
+      - about
+      - altitude
+      - company_name
+      - country_id
+      - date_added
+      - date_updated
+      - farm_id
+      - id
+      - img
+      - name
+      - price
+      - process
+      - profile_note
+      - rating
+      - region
+      - roast_type
+      - varietal
+      filter: {}
+  - role: unverified
+    permission:
+      columns:
+      - id
+      - name
+      - company_name
+      - roast_type
+      - country_id
+      - farm_id
+      - process
+      - region
+      - varietal
+      - altitude
+      - profile_note
+      - img
+      - about
+      - rating
+      - price
+      - date_added
+      - date_updated
+      filter: {}
+      allow_aggregations: true
+- table:
+    schema: public
+    name: bean_reviews
+  object_relationships:
+  - name: barista
+    using:
+      foreign_key_constraint_on: barista_id
+  - name: bean
+    using:
+      foreign_key_constraint_on: bean_id
+  insert_permissions:
+  - role: barista
+    permission:
+      check: {}
+      columns:
+      - barista_id
+      - bean_id
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - rating
+      backend_only: false
+  select_permissions:
+  - role: all_barista
+    permission:
+      columns:
+      - id
+      - barista_id
+      - bean_id
+      - rating
+      - comment
+      - date_added
+      - date_updated
+      filter: {}
+  - role: barista
+    permission:
+      columns:
+      - barista_id
+      - bean_id
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - rating
+      filter: {}
+      allow_aggregations: true
+  - role: guest
+    permission:
+      columns:
+      - barista_id
+      - bean_id
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - rating
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: barista
+    permission:
+      columns:
+      - barista_id
+      - bean_id
+      - comment
+      - date_updated
+      - id
+      - rating
+      filter: {}
+      check: {}
+  delete_permissions:
+  - role: barista
+    permission:
+      filter: {}
+- table:
+    schema: public
+    name: brew_logs
+  object_relationships:
+  - name: barista
+    using:
+      foreign_key_constraint_on: barista_id
+  - name: bean
+    using:
+      foreign_key_constraint_on: bean_id
+  insert_permissions:
+  - role: barista
+    permission:
+      check: {}
+      columns:
+      - barista_id
+      - bean_grind
+      - bean_id
+      - bean_name_free
+      - bean_weight
+      - brew_type
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - is_private
+      - rating
+      - stage
+      - water_amount
+      - water_temp
+      backend_only: false
+  select_permissions:
+  - role: barista
+    permission:
+      columns:
+      - barista_id
+      - bean_grind
+      - bean_id
+      - bean_name_free
+      - bean_weight
+      - brew_type
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - is_private
+      - rating
+      - stage
+      - water_amount
+      - water_temp
+      filter:
+        _or:
+        - barista_id:
+            _eq: x-hasura-barista-id
+        - is_private:
+            _eq: false
+  - role: guest
+    permission:
+      columns:
+      - barista_id
+      - bean_grind
+      - bean_id
+      - bean_name_free
+      - bean_weight
+      - brew_type
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - is_private
+      - rating
+      - stage
+      - water_amount
+      - water_temp
+      filter:
+        is_private:
+          _ne: true
+  - role: unverified
+    permission:
+      columns:
+      - id
+      - barista_id
+      - brew_type
+      - stage
+      - bean_weight
+      - bean_grind
+      - water_amount
+      - bean_id
+      - water_temp
+      - rating
+      - comment
+      - is_private
+      - date_added
+      - bean_name_free
+      - date_updated
+      filter:
+        _or:
+        - barista_id:
+            _eq: x-hasura-barista-id
+        - is_private:
+            _eq: false
+      allow_aggregations: true
+  update_permissions:
+  - role: barista
+    permission:
+      columns:
+      - barista_id
+      - bean_grind
+      - bean_id
+      - bean_name_free
+      - bean_weight
+      - brew_type
+      - comment
+      - date_updated
+      - id
+      - is_private
+      - rating
+      - stage
+      - water_amount
+      - water_temp
+      filter:
+        barista_id:
+          _eq: x-hasura-barista-id
+      check: {}
+  delete_permissions:
+  - role: barista
+    permission:
+      filter:
+        barista_id:
+          _eq: x-hasura-barista-id
+- table:
+    schema: public
+    name: password_reset_code
+  object_relationships:
+  - name: barista
+    using:
+      foreign_key_constraint_on: barista_id
+- table:
+    schema: public
+    name: recipe_reviews
+  object_relationships:
+  - name: barista
+    using:
+      foreign_key_constraint_on: barista_id
+  - name: recipe
+    using:
+      foreign_key_constraint_on: recipe_id
+  insert_permissions:
+  - role: barista
+    permission:
+      check: {}
+      columns:
+      - barista_id
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - rating
+      - recipe_id
+      backend_only: false
+  select_permissions:
+  - role: all_barista
+    permission:
+      columns:
+      - id
+      - barista_id
+      - recipe_id
+      - rating
+      - comment
+      - date_added
+      - date_updated
+      filter: {}
+      allow_aggregations: true
+  - role: barista
+    permission:
+      columns:
+      - barista_id
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - rating
+      - recipe_id
+      filter: {}
+      allow_aggregations: true
+  - role: guest
+    permission:
+      columns:
+      - barista_id
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - rating
+      - recipe_id
+      filter: {}
+      allow_aggregations: true
+  - role: unverified
+    permission:
+      columns:
+      - id
+      - barista_id
+      - recipe_id
+      - rating
+      - comment
+      - date_added
+      - date_updated
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: barista
+    permission:
+      columns:
+      - barista_id
+      - comment
+      - date_updated
+      - id
+      - rating
+      - recipe_id
+      filter: {}
+      check: {}
+  delete_permissions:
+  - role: barista
+    permission:
+      filter: {}
+- table:
+    schema: public
+    name: recipes
+  object_relationships:
+  - name: barista
+    using:
+      foreign_key_constraint_on: barista_id
+  - name: bean
+    using:
+      foreign_key_constraint_on: bean_id
+  array_relationships:
+  - name: recipe_reviews
+    using:
+      foreign_key_constraint_on:
+        column: recipe_id
+        table:
+          schema: public
+          name: recipe_reviews
+  - name: stages
+    using:
+      foreign_key_constraint_on:
+        column: recipe_id
+        table:
+          schema: public
+          name: stage
+  insert_permissions:
+  - role: barista
+    permission:
+      check:
+        barista_id:
+          _eq: x-hasura-barista-id
+      set:
+        barista_id: x-hasura-barista-id
+      columns:
+      - id
+      - barista_id
+      - brew_type
+      - bean_weight
+      - bean_grind
+      - water_amount
+      - bean_id
+      - water_temp
+      - is_private
+      - date_added
+      - about
+      - name
+      - instructions
+      - date_updated
+      - bean_name_free
+      - device
+      backend_only: false
+  select_permissions:
+  - role: all_barista
+    permission:
+      columns:
+      - is_private
+      - barista_id
+      - bean_id
+      - bean_weight
+      - id
+      - water_amount
+      - water_temp
+      - about
+      - bean_grind
+      - bean_name_free
+      - brew_type
+      - device
+      - instructions
+      - name
+      - date_added
+      - date_updated
+      filter:
+        _or:
+        - is_private:
+            _eq: false
+        - barista_id:
+            _eq: x-hasura-barista-id
+      allow_aggregations: true
+  - role: barista
+    permission:
+      columns:
+      - about
+      - barista_id
+      - bean_grind
+      - bean_id
+      - bean_name_free
+      - bean_weight
+      - brew_type
+      - date_added
+      - date_updated
+      - device
+      - id
+      - instructions
+      - is_private
+      - name
+      - water_amount
+      - water_temp
+      filter:
+        _or:
+        - is_private:
+            _eq: false
+        - barista_id:
+            _eq: x-hasura-barista-id
+      allow_aggregations: true
+  - role: guest
+    permission:
+      columns:
+      - about
+      - barista_id
+      - bean_grind
+      - bean_id
+      - bean_name_free
+      - bean_weight
+      - brew_type
+      - date_added
+      - date_updated
+      - device
+      - id
+      - instructions
+      - is_private
+      - name
+      - water_amount
+      - water_temp
+      filter:
+        is_private:
+          _eq: false
+      allow_aggregations: true
+  - role: unverified
+    permission:
+      columns:
+      - about
+      - barista_id
+      - bean_grind
+      - bean_id
+      - bean_name_free
+      - bean_weight
+      - brew_type
+      - date_added
+      - date_updated
+      - device
+      - id
+      - instructions
+      - is_private
+      - name
+      - water_amount
+      - water_temp
+      filter:
+        _or:
+        - is_private:
+            _eq: false
+        - barista_id:
+            _eq: x-hasura-barista-id
+      allow_aggregations: true
+  update_permissions:
+  - role: barista
+    permission:
+      columns:
+      - about
+      - bean_grind
+      - bean_id
+      - bean_name_free
+      - bean_weight
+      - brew_type
+      - date_added
+      - date_updated
+      - device
+      - id
+      - instructions
+      - is_private
+      - name
+      - water_amount
+      - water_temp
+      filter:
+        barista_id:
+          _eq: x-hasura-barista-id
+      check:
+        barista_id:
+          _eq: x-hasura-barista-id
+  delete_permissions:
+  - role: barista
+    permission:
+      filter:
+        barista_id:
+          _eq: x-hasura-barista-id
+- table:
+    schema: public
+    name: refresh_token
+  object_relationships:
+  - name: barista
+    using:
+      foreign_key_constraint_on: barista_id
+- table:
+    schema: public
+    name: stage
+  object_relationships:
+  - name: recipe
+    using:
+      foreign_key_constraint_on: recipe_id
+  insert_permissions:
+  - role: barista
+    permission:
+      check:
+        recipe:
+          barista_id:
+            _eq: x-hasura-barista-id
+      columns:
+      - end
+      - action
+      - recipe_id
+      - start
+      - weight
+      backend_only: false
+  select_permissions:
+  - role: all_barista
+    permission:
+      columns:
+      - end
+      - id
+      - recipe_id
+      - start
+      - weight
+      - action
+      filter:
+        _or:
+        - recipe:
+            barista_id:
+              _eq: x-hasura-barista-id
+        - recipe:
+            is_private:
+              _eq: false
+      allow_aggregations: true
+  - role: barista
+    permission:
+      columns:
+      - end
+      - id
+      - recipe_id
+      - start
+      - weight
+      - action
+      filter:
+        _or:
+        - recipe:
+            barista_id:
+              _eq: x-hasura-barista-id
+        - recipe:
+            is_private:
+              _eq: false
+      allow_aggregations: true
+  - role: guest
+    permission:
+      columns:
+      - end
+      - id
+      - recipe_id
+      - start
+      - weight
+      - action
+      filter:
+        recipe:
+          is_private:
+            _eq: false
+      allow_aggregations: true
+  - role: unverified
+    permission:
+      columns:
+      - end
+      - id
+      - recipe_id
+      - start
+      - weight
+      - action
+      filter:
+        recipe:
+          is_private:
+            _eq: false
+      allow_aggregations: true
+  update_permissions:
+  - role: barista
+    permission:
+      columns:
+      - end
+      - action
+      - recipe_id
+      - start
+      - weight
+      filter:
+        recipe:
+          barista_id:
+            _eq: x-hasura-barista-id
+      check: null
+  delete_permissions:
+  - role: barista
+    permission:
+      filter:
+        recipe:
+          barista_id:
+            _eq: x-hasura-barista-id
+- table:
+    schema: public
+    name: verification_code
+  object_relationships:
+  - name: barista
+    using:
+      foreign_key_constraint_on: barista_id
