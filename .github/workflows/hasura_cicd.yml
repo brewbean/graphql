@@ -5,6 +5,10 @@ on:
   push:
     branches: [ main, stage ]
 
+env:
+  HASURA_CLI_VERSION: v1.3.3
+  PATH_TO_HASURA_PROJECT_ROOT: .
+
 jobs:
   prod_deploy:
     # The type of runner that the job will run on
@@ -18,7 +22,9 @@ jobs:
       - name: Hasura CI/CD
         uses: GavinRay97/hasura-ci-cd-action@v1.3
         with:
-          HASURA_ENDPOINT: HASURA_ENDPOINT
+          PATH_TO_HASURA_PROJECT_ROOT: ${{ PATH_TO_HASURA_PROJECT_ROOT }}
+          HASURA_CLI_VERSION: ${{ HASURA_CLI_VERSION }}
+          HASURA_ENDPOINT: ${{ HASURA_ENDPOINT }}
           HASURA_ADMIN_SECRET: ${{ secrets.PROD_HASURA_ADMIN_SECRET }}
           HASURA_MIGRATIONS_ENABLED: true
   
@@ -32,6 +38,8 @@ jobs:
       - name: Hasura CI/CD
         uses: GavinRay97/hasura-ci-cd-action@v1.3
         with:
-          HASURA_ENDPOINT: HASURA_ENDPOINT
+          PATH_TO_HASURA_PROJECT_ROOT: ${{ PATH_TO_HASURA_PROJECT_ROOT }}
+          HASURA_CLI_VERSION: ${{ HASURA_CLI_VERSION }}
+          HASURA_ENDPOINT: ${{ HASURA_ENDPOINT }}
           HASURA_ADMIN_SECRET: ${{ secrets.STAGE_HASURA_ADMIN_SECRET }}
           HASURA_MIGRATIONS_ENABLED: true
