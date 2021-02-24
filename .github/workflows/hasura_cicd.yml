@@ -18,7 +18,7 @@ jobs:
       - name: Hasura CI/CD
         uses: GavinRay97/hasura-ci-cd-action@v1.3
         with:
-          HASURA_ENDPOINT: env.HASURA_ENDPOINT
+          HASURA_ENDPOINT: HASURA_ENDPOINT
           HASURA_ADMIN_SECRET: ${{ secrets.PROD_HASURA_ADMIN_SECRET }}
           HASURA_MIGRATIONS_ENABLED: true
   
@@ -32,6 +32,6 @@ jobs:
       - name: Hasura CI/CD
         uses: GavinRay97/hasura-ci-cd-action@v1.3
         with:
-          HASURA_ENDPOINT: env.HASURA_ENDPOINT
+          HASURA_ENDPOINT: HASURA_ENDPOINT
           HASURA_ADMIN_SECRET: ${{ secrets.STAGE_HASURA_ADMIN_SECRET }}
           HASURA_MIGRATIONS_ENABLED: true
