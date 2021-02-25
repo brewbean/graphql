@@ -1,4 +1,4 @@
-name: Backup Stage from Production
+name: Copy production DB to staging DB 
 
 on:
   schedule:
@@ -12,7 +12,7 @@ env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
 jobs:
-  copy:
+  backup:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,12 +22,10 @@ jobs:
         run: sudo apt update && sudo apt install heroku
 
       - name: Get staging DB URL from Heroku
-        run: |
-          echo "STAGE_DB_URL=$(heroku config:get DATABASE_URL -a ${{ env.STAGE_APP_NAME }})" >> $GITHUB_ENV
+        run: echo "STAGE_DB_URL=$(heroku config:get DATABASE_URL -a ${{ env.STAGE_APP_NAME }})" >> $GITHUB_ENV
 
       - name: Get production DB URL from Heroku
-        run: |
-          echo "PROD_DB_URL=$(heroku config:get DATABASE_URL -a ${{ env.PROD_APP_NAME }})" >> $GITHUB_ENV
+        run: echo "PROD_DB_URL=$(heroku config:get DATABASE_URL -a ${{ env.PROD_APP_NAME }})" >> $GITHUB_ENV
 
       - name: Log DB URLS
         run: |
