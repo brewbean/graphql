@@ -24,11 +24,14 @@ jobs:
       - name: Get staging DB URL from Heroku
         run: |
           echo "STAGE_DB_URL=$(heroku config --app ${{ env.STAGE_APP_NAME }} | grep "DATABASE_URL" | cut -d":" -f2- | xargs)" >> $GITHUB_ENV
-          echo "staging database URL => ${{ env.STAGE_DB_URL }}"
 
       - name: Get production DB URL from Heroku
         run: |
           echo "PROD_DB_URL=$(heroku config --app ${{ env.PROD_APP_NAME }} | grep "DATABASE_URL" | cut -d":" -f2- | xargs)" >> $GITHUB_ENV
+
+      - name: Log DB URLS
+        run: |
+          echo "staging database URL => ${{ env.STAGE_DB_URL }}"
           echo "production database URL => ${{ env.PROD_DB_URL }}"
 
       - name: Copy DB from Prod to Stage
