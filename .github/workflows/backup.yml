@@ -3,6 +3,7 @@ name: Backup Stage from Production
 on:
   schedule:
     - cron: "0 20 * * 1"
+  workflow_dispatch:
 
 env:
   PROD_APP_NAME: gql-brewbean
