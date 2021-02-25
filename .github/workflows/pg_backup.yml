@@ -21,18 +21,15 @@ jobs:
       - name: Install Heroku
         run: sudo apt update && sudo apt install heroku
 
-      - name: Get stage DB URL from Heroku
+      - name: Get staging DB URL from Heroku
         run: |
           echo "STAGE_DB_URL=$(heroku config --app ${{ env.STAGE_APP_NAME }} | grep "DATABASE_URL" | cut -d":" -f2- | xargs)" >> $GITHUB_ENV
+          echo "staging database URL => ${{ env.STAGE_DB_URL }}"
 
-      - name: Get stage DB URL from Heroku
+      - name: Get production DB URL from Heroku
         run: |
           echo "PROD_DB_URL=$(heroku config --app ${{ env.PROD_APP_NAME }} | grep "DATABASE_URL" | cut -d":" -f2- | xargs)" >> $GITHUB_ENV
+          echo "production database URL => ${{ env.PROD_DB_URL }}"
 
-      # - name: Copy DB from Prod to Stage
-      #   env:
-      #     PROD_APP_NAME: gql-brewbean
-      #     STAGE_APP_NAME: staging-gql-brewbean
-      #   run: |
-
-      #     heroku pg:copy ${{ env.PROD_APP_NAME }} --app ${{ staging-gql-brewbean }}
+      - name: Copy DB from Prod to Stage
+        run: heroku pg:copy ${{ env.PROD_APP_NAME }}::${{ env.PROD_DB_URL }} ${{ env.STAGE_DB_URL }} --app ${{ env.STAGE_APP_NAME }}
