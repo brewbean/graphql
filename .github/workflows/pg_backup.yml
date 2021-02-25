@@ -1,0 +1,37 @@
+name: Backup Stage from Production
+
+on:
+  schedule:
+    - cron: "0 20 * * 1"
+
+env:
+  PROD_APP_NAME: gql-brewbean
+  STAGE_APP_NAME: staging-gql-brewbean
+  ## Makes HEROKU_API_KEY available to CLI config
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Heroku
+        run: sudo apt update && sudo apt install heroku
+
+      - name: Get stage DB URL from Heroku
+        run: |
+          echo "STAGE_DB_URL=$(heroku config --app ${{ env.STAGE_APP_NAME }} | grep "DATABASE_URL" | cut -d":" -f2- | xargs)" >> $GITHUB_ENV
+
+      - name: Get stage DB URL from Heroku
+        run: |
+          echo "PROD_DB_URL=$(heroku config --app ${{ env.PROD_APP_NAME }} | grep "DATABASE_URL" | cut -d":" -f2- | xargs)" >> $GITHUB_ENV
+
+      # - name: Copy DB from Prod to Stage
+      #   env:
+      #     PROD_APP_NAME: gql-brewbean
+      #     STAGE_APP_NAME: staging-gql-brewbean
+      #   run: |
+
+      #     heroku pg:copy ${{ env.PROD_APP_NAME }} --app ${{ staging-gql-brewbean }}
