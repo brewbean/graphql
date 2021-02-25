@@ -1,4 +1,4 @@
-name: Copy production DB to staging DB 
+name: Copy production DB to staging DB
 
 on:
   schedule:
@@ -21,16 +21,5 @@ jobs:
       - name: Install Heroku
         run: sudo apt update && sudo apt install heroku
 
-      - name: Get staging DB URL from Heroku
-        run: echo "STAGE_DB_URL=$(heroku config:get DATABASE_URL -a ${{ env.STAGE_APP_NAME }})" >> $GITHUB_ENV
-
-      - name: Get production DB URL from Heroku
-        run: echo "PROD_DB_URL=$(heroku config:get DATABASE_URL -a ${{ env.PROD_APP_NAME }})" >> $GITHUB_ENV
-
-      - name: Log DB URLS
-        run: |
-          echo "staging database URL => ${{ env.STAGE_DB_URL }}"
-          echo "production database URL => ${{ env.PROD_DB_URL }}"
-
-      - name: Copy DB from Prod to Stage
-        run: heroku pg:copy ${{ env.PROD_APP_NAME }}::${{ env.PROD_DB_URL }} ${{ env.STAGE_DB_URL }} --app ${{ env.STAGE_APP_NAME }}
+      - name: Copy DB from Prod to Stage [DESTRUCTIVE]
+        run: heroku pg:copy ${{ env.PROD_APP_NAME }}::DATABASE_URL DATABASE_URL --app ${{ env.STAGE_APP_NAME }} --confirm ${{ env.STAGE_APP_NAME }}
