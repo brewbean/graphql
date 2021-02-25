@@ -1,1 +1,7 @@
-*.env
+.env
+.env.production
+.env.development
+.env.staging
+
+# ignore any pg dump files
+*.dump
