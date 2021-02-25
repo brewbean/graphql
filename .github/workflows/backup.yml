@@ -3,11 +3,12 @@ name: Backup Stage from Production
 on:
   schedule:
     - cron: "0 20 * * 1"
-  workflow_dispatch:
 
 env:
   PROD_APP_NAME: gql-brewbean
   STAGE_APP_NAME: staging-gql-brewbean
+  ## Makes HEROKU_API_KEY available to CLI config
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
 jobs:
   build:
@@ -16,14 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Update Heroku
+      - name: Install Heroku
         run: sudo apt update && sudo apt install heroku
-
-      - name: Login to Heroku
-        ## Makes HEROKU_API_KEY available to CLI config
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku login
 
       - name: Get stage DB URL from Heroku
         run: |
