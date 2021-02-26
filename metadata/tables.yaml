@@ -26,6 +26,13 @@
         table:
           schema: public
           name: bean_reviews
+  - name: password_reset_codes
+    using:
+      foreign_key_constraint_on:
+        column: barista_id
+        table:
+          schema: public
+          name: password_reset_code
   - name: recipe_reviews
     using:
       foreign_key_constraint_on:
@@ -54,6 +61,13 @@
         table:
           schema: public
           name: refresh_token
+  - name: verification_codes
+    using:
+      foreign_key_constraint_on:
+        column: barista_id
+        table:
+          schema: public
+          name: verification_code
   select_permissions:
   - role: all_barista
     permission:
@@ -62,6 +76,7 @@
       - display_name
       - id
       filter: {}
+      limit: 20
   - role: barista
     permission:
       columns:
@@ -74,6 +89,7 @@
       filter:
         id:
           _eq: x-hasura-barista-id
+      limit: 20
   - role: guest
     permission:
       columns:
@@ -81,6 +97,7 @@
       - display_name
       - id
       filter: {}
+      limit: 20
   - role: unverified
     permission:
       columns:
@@ -93,6 +110,7 @@
       filter:
         id:
           _eq: x-hasura-barista-id
+      limit: 20
 - table:
     schema: public
     name: bean
@@ -139,6 +157,7 @@
       - price
       - date_added
       - date_updated
+      limit: 20
       filter: {}
   - role: barista
     permission:
@@ -160,6 +179,7 @@
       - region
       - roast_type
       - varietal
+      limit: 20
       filter: {}
   - role: guest
     permission:
@@ -181,6 +201,7 @@
       - region
       - roast_type
       - varietal
+      limit: 20
       filter: {}
   - role: unverified
     permission:
@@ -202,6 +223,7 @@
       - price
       - date_added
       - date_updated
+      limit: 20
       filter: {}
       allow_aggregations: true
 - table:
@@ -239,6 +261,7 @@
       - date_added
       - date_updated
       filter: {}
+      limit: 20
   - role: barista
     permission:
       columns:
@@ -250,6 +273,7 @@
       - id
       - rating
       filter: {}
+      limit: 20
       allow_aggregations: true
   - role: guest
     permission:
@@ -262,6 +286,20 @@
       - id
       - rating
       filter: {}
+      limit: 20
+      allow_aggregations: true
+  - role: unverified
+    permission:
+      columns:
+      - barista_id
+      - bean_id
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - rating
+      filter: {}
+      limit: 20
       allow_aggregations: true
   update_permissions:
   - role: barista
@@ -335,6 +373,7 @@
             _eq: x-hasura-barista-id
         - is_private:
             _eq: false
+      limit: 20
   - role: guest
     permission:
       columns:
@@ -356,6 +395,7 @@
       filter:
         is_private:
           _ne: true
+      limit: 20
   - role: unverified
     permission:
       columns:
@@ -380,6 +420,7 @@
             _eq: x-hasura-barista-id
         - is_private:
             _eq: false
+      limit: 20
       allow_aggregations: true
   update_permissions:
   - role: barista
@@ -451,6 +492,7 @@
       - date_added
       - date_updated
       filter: {}
+      limit: 20
       allow_aggregations: true
   - role: barista
     permission:
@@ -463,6 +505,7 @@
       - rating
       - recipe_id
       filter: {}
+      limit: 20
       allow_aggregations: true
   - role: guest
     permission:
@@ -475,6 +518,7 @@
       - rating
       - recipe_id
       filter: {}
+      limit: 20
       allow_aggregations: true
   - role: unverified
     permission:
@@ -487,6 +531,7 @@
       - date_added
       - date_updated
       filter: {}
+      limit: 20
       allow_aggregations: true
   update_permissions:
   - role: barista
@@ -581,6 +626,7 @@
             _eq: false
         - barista_id:
             _eq: x-hasura-barista-id
+      limit: 20
       allow_aggregations: true
   - role: barista
     permission:
@@ -607,6 +653,7 @@
             _eq: false
         - barista_id:
             _eq: x-hasura-barista-id
+      limit: 20
       allow_aggregations: true
   - role: guest
     permission:
@@ -630,6 +677,7 @@
       filter:
         is_private:
           _eq: false
+      limit: 20
       allow_aggregations: true
   - role: unverified
     permission:
@@ -656,6 +704,7 @@
             _eq: false
         - barista_id:
             _eq: x-hasura-barista-id
+      limit: 20
       allow_aggregations: true
   update_permissions:
   - role: barista
@@ -734,6 +783,7 @@
         - recipe:
             is_private:
               _eq: false
+      limit: 20
       allow_aggregations: true
   - role: barista
     permission:
@@ -752,6 +802,7 @@
         - recipe:
             is_private:
               _eq: false
+      limit: 20
       allow_aggregations: true
   - role: guest
     permission:
@@ -766,6 +817,7 @@
         recipe:
           is_private:
             _eq: false
+      limit: 20
       allow_aggregations: true
   - role: unverified
     permission:
@@ -780,6 +832,7 @@
         recipe:
           is_private:
             _eq: false
+      limit: 20
       allow_aggregations: true
   update_permissions:
   - role: barista
