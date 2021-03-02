@@ -26,6 +26,13 @@
         table:
           schema: public
           name: bean_review
+  - name: brew_logs
+    using:
+      foreign_key_constraint_on:
+        column: barista_id
+        table:
+          schema: public
+          name: brew_log
   - name: password_reset_codes
     using:
       foreign_key_constraint_on:
@@ -455,6 +462,13 @@
     using:
       foreign_key_constraint_on: bean_id
   array_relationships:
+  - name: brew_logs
+    using:
+      foreign_key_constraint_on:
+        column: recipe_id
+        table:
+          schema: public
+          name: brew_log
   - name: recipe_reviews
     using:
       foreign_key_constraint_on:
@@ -469,6 +483,13 @@
         table:
           schema: public
           name: stage
+  - name: template_brew_logs
+    using:
+      foreign_key_constraint_on:
+        column: template_recipe_id
+        table:
+          schema: public
+          name: brew_log
   insert_permissions:
   - role: barista
     permission:
