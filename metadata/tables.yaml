@@ -122,14 +122,14 @@
         table:
           schema: public
           name: bean_reviews
-  - name: recipes
+  - name: brew_logs
     using:
       foreign_key_constraint_on:
         column: bean_id
         table:
           schema: public
           name: brew_logs
-  - name: recipesByBeanId
+  - name: recipes
     using:
       foreign_key_constraint_on:
         column: bean_id
