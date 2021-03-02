@@ -25,7 +25,7 @@
         column: barista_id
         table:
           schema: public
-          name: bean_reviews
+          name: bean_review
   - name: brew_logs
     using:
       foreign_key_constraint_on:
@@ -121,7 +121,7 @@
         column: bean_id
         table:
           schema: public
-          name: bean_reviews
+          name: bean_review
   - name: brew_logs
     using:
       foreign_key_constraint_on:
@@ -228,7 +228,7 @@
       allow_aggregations: true
 - table:
     schema: public
-    name: bean_reviews
+    name: bean_review
   object_relationships:
   - name: barista
     using:
