@@ -26,6 +26,13 @@
         table:
           schema: public
           name: bean_reviews
+  - name: brew_logs
+    using:
+      foreign_key_constraint_on:
+        column: barista_id
+        table:
+          schema: public
+          name: brew_logs
   - name: password_reset_codes
     using:
       foreign_key_constraint_on:
@@ -41,13 +48,6 @@
           schema: public
           name: recipe_reviews
   - name: recipes
-    using:
-      foreign_key_constraint_on:
-        column: barista_id
-        table:
-          schema: public
-          name: brew_logs
-  - name: recipesByBaristaId
     using:
       foreign_key_constraint_on:
         column: barista_id
@@ -157,8 +157,8 @@
       - price
       - date_added
       - date_updated
-      limit: 20
       filter: {}
+      limit: 20
   - role: barista
     permission:
       columns:
@@ -179,8 +179,8 @@
       - region
       - roast_type
       - varietal
-      limit: 20
       filter: {}
+      limit: 20
   - role: guest
     permission:
       columns:
@@ -201,8 +201,8 @@
       - region
       - roast_type
       - varietal
-      limit: 20
       filter: {}
+      limit: 20
   - role: unverified
     permission:
       columns:
@@ -223,8 +223,8 @@
       - price
       - date_added
       - date_updated
-      limit: 20
       filter: {}
+      limit: 20
       allow_aggregations: true
 - table:
     schema: public
