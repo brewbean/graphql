@@ -25,6 +25,7 @@ services:
       HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
       ## Signs local development auth API JWT
       HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256","key":"66a745ee1373f640e4ce9e9c4c22fb925fdcaa1c9e73ed5a3949b86088fbfa3f"}'
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: guest
 volumes:
   db_data:
 
