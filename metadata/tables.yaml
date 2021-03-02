@@ -26,13 +26,6 @@
         table:
           schema: public
           name: bean_review
-  - name: brew_logs
-    using:
-      foreign_key_constraint_on:
-        column: barista_id
-        table:
-          schema: public
-          name: brew_logs
   - name: password_reset_codes
     using:
       foreign_key_constraint_on:
@@ -122,13 +115,6 @@
         table:
           schema: public
           name: bean_review
-  - name: brew_logs
-    using:
-      foreign_key_constraint_on:
-        column: bean_id
-        table:
-          schema: public
-          name: brew_logs
   - name: recipes
     using:
       foreign_key_constraint_on:
@@ -317,139 +303,6 @@
   - role: barista
     permission:
       filter: {}
-- table:
-    schema: public
-    name: brew_logs
-  object_relationships:
-  - name: barista
-    using:
-      foreign_key_constraint_on: barista_id
-  - name: bean
-    using:
-      foreign_key_constraint_on: bean_id
-  insert_permissions:
-  - role: barista
-    permission:
-      check: {}
-      columns:
-      - barista_id
-      - bean_grind
-      - bean_id
-      - bean_name_free
-      - bean_weight
-      - brew_type
-      - comment
-      - date_added
-      - date_updated
-      - id
-      - is_private
-      - rating
-      - stage
-      - water_amount
-      - water_temp
-      backend_only: false
-  select_permissions:
-  - role: barista
-    permission:
-      columns:
-      - barista_id
-      - bean_grind
-      - bean_id
-      - bean_name_free
-      - bean_weight
-      - brew_type
-      - comment
-      - date_added
-      - date_updated
-      - id
-      - is_private
-      - rating
-      - stage
-      - water_amount
-      - water_temp
-      filter:
-        _or:
-        - barista_id:
-            _eq: x-hasura-barista-id
-        - is_private:
-            _eq: false
-      limit: 20
-  - role: guest
-    permission:
-      columns:
-      - barista_id
-      - bean_grind
-      - bean_id
-      - bean_name_free
-      - bean_weight
-      - brew_type
-      - comment
-      - date_added
-      - date_updated
-      - id
-      - is_private
-      - rating
-      - stage
-      - water_amount
-      - water_temp
-      filter:
-        is_private:
-          _ne: true
-      limit: 20
-  - role: unverified
-    permission:
-      columns:
-      - id
-      - barista_id
-      - brew_type
-      - stage
-      - bean_weight
-      - bean_grind
-      - water_amount
-      - bean_id
-      - water_temp
-      - rating
-      - comment
-      - is_private
-      - date_added
-      - bean_name_free
-      - date_updated
-      filter:
-        _or:
-        - barista_id:
-            _eq: x-hasura-barista-id
-        - is_private:
-            _eq: false
-      limit: 20
-      allow_aggregations: true
-  update_permissions:
-  - role: barista
-    permission:
-      columns:
-      - barista_id
-      - bean_grind
-      - bean_id
-      - bean_name_free
-      - bean_weight
-      - brew_type
-      - comment
-      - date_updated
-      - id
-      - is_private
-      - rating
-      - stage
-      - water_amount
-      - water_temp
-      filter:
-        barista_id:
-          _eq: x-hasura-barista-id
-      check: {}
-  delete_permissions:
-  - role: barista
-    permission:
-      filter:
-        barista_id:
-          _eq: x-hasura-barista-id
 - table:
     schema: public
     name: password_reset_code
