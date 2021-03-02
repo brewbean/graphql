@@ -305,6 +305,134 @@
       filter: {}
 - table:
     schema: public
+    name: brew_log
+  object_relationships:
+  - name: barista
+    using:
+      foreign_key_constraint_on: barista_id
+  - name: recipe
+    using:
+      foreign_key_constraint_on: recipe_id
+  - name: template_recipe
+    using:
+      foreign_key_constraint_on: template_recipe_id
+  insert_permissions:
+  - role: barista
+    permission:
+      check:
+        barista_id:
+          _eq: x-hasura-barista-id
+      set:
+        barista_id: x-hasura-barista-id
+      columns:
+      - is_private
+      - barista_id
+      - id
+      - recipe_id
+      - template_recipe_id
+      - comment
+      - title
+      - date_created
+      backend_only: false
+  select_permissions:
+  - role: all_barista
+    permission:
+      columns:
+      - is_private
+      - barista_id
+      - id
+      - recipe_id
+      - template_recipe_id
+      - comment
+      - title
+      - date_created
+      filter:
+        _or:
+        - is_private:
+            _eq: false
+        - barista_id:
+            _eq: x-hasura-barista-id
+      limit: 20
+      allow_aggregations: true
+  - role: barista
+    permission:
+      columns:
+      - is_private
+      - barista_id
+      - id
+      - recipe_id
+      - template_recipe_id
+      - comment
+      - title
+      - date_created
+      filter:
+        _or:
+        - is_private:
+            _eq: false
+        - barista_id:
+            _eq: x-hasura-barista-id
+      limit: 20
+      allow_aggregations: true
+  - role: guest
+    permission:
+      columns:
+      - is_private
+      - barista_id
+      - id
+      - recipe_id
+      - template_recipe_id
+      - comment
+      - title
+      - date_created
+      filter:
+        is_private:
+          _eq: false
+      limit: 20
+      allow_aggregations: true
+  - role: unverified
+    permission:
+      columns:
+      - is_private
+      - barista_id
+      - id
+      - recipe_id
+      - template_recipe_id
+      - comment
+      - title
+      - date_created
+      filter:
+        _or:
+        - is_private:
+            _eq: false
+        - barista_id:
+            _eq: x-hasura-barista-id
+      limit: 20
+      allow_aggregations: true
+  update_permissions:
+  - role: barista
+    permission:
+      columns:
+      - comment
+      - date_created
+      - id
+      - is_private
+      - recipe_id
+      - template_recipe_id
+      - title
+      filter:
+        barista_id:
+          _eq: x-hasura-barista-id
+      check:
+        barista_id:
+          _eq: x-hasura-barista-id
+  delete_permissions:
+  - role: barista
+    permission:
+      filter:
+        barista_id:
+          _eq: x-hasura-barista-id
+- table:
+    schema: public
     name: password_reset_code
   object_relationships:
   - name: barista
