@@ -46,7 +46,7 @@
         column: barista_id
         table:
           schema: public
-          name: recipe_reviews
+          name: recipe_review
   - name: recipes
     using:
       foreign_key_constraint_on:
@@ -474,7 +474,7 @@
         column: recipe_id
         table:
           schema: public
-          name: recipe_reviews
+          name: recipe_review
   - name: stages
     using:
       foreign_key_constraint_on:
@@ -647,7 +647,7 @@
           _eq: x-hasura-barista-id
 - table:
     schema: public
-    name: recipe_reviews
+    name: recipe_review
   object_relationships:
   - name: barista
     using:
