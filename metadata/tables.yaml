@@ -325,27 +325,29 @@
       set:
         barista_id: x-hasura-barista-id
       columns:
-      - is_private
       - barista_id
+      - comment
+      - date_created
       - id
+      - is_private
+      - rating
       - recipe_id
       - template_recipe_id
-      - comment
       - title
-      - date_created
       backend_only: false
   select_permissions:
   - role: all_barista
     permission:
       columns:
-      - is_private
-      - barista_id
       - id
       - recipe_id
       - template_recipe_id
+      - barista_id
+      - is_private
+      - date_created
       - comment
       - title
-      - date_created
+      - rating
       filter:
         _or:
         - is_private:
@@ -360,6 +362,7 @@
       - is_private
       - barista_id
       - id
+      - rating
       - recipe_id
       - template_recipe_id
       - comment
@@ -379,6 +382,7 @@
       - is_private
       - barista_id
       - id
+      - rating
       - recipe_id
       - template_recipe_id
       - comment
@@ -395,6 +399,7 @@
       - is_private
       - barista_id
       - id
+      - rating
       - recipe_id
       - template_recipe_id
       - comment
@@ -416,6 +421,7 @@
       - date_created
       - id
       - is_private
+      - rating
       - recipe_id
       - template_recipe_id
       - title
