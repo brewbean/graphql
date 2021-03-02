@@ -53,7 +53,7 @@
         column: barista_id
         table:
           schema: public
-          name: recipes
+          name: recipe
   - name: refresh_tokens
     using:
       foreign_key_constraint_on:
@@ -135,7 +135,7 @@
         column: bean_id
         table:
           schema: public
-          name: recipes
+          name: recipe
   select_permissions:
   - role: all_barista
     permission:
@@ -459,99 +459,7 @@
       foreign_key_constraint_on: barista_id
 - table:
     schema: public
-    name: recipe_reviews
-  object_relationships:
-  - name: barista
-    using:
-      foreign_key_constraint_on: barista_id
-  - name: recipe
-    using:
-      foreign_key_constraint_on: recipe_id
-  insert_permissions:
-  - role: barista
-    permission:
-      check: {}
-      columns:
-      - barista_id
-      - comment
-      - date_added
-      - date_updated
-      - id
-      - rating
-      - recipe_id
-      backend_only: false
-  select_permissions:
-  - role: all_barista
-    permission:
-      columns:
-      - id
-      - barista_id
-      - recipe_id
-      - rating
-      - comment
-      - date_added
-      - date_updated
-      filter: {}
-      limit: 20
-      allow_aggregations: true
-  - role: barista
-    permission:
-      columns:
-      - barista_id
-      - comment
-      - date_added
-      - date_updated
-      - id
-      - rating
-      - recipe_id
-      filter: {}
-      limit: 20
-      allow_aggregations: true
-  - role: guest
-    permission:
-      columns:
-      - barista_id
-      - comment
-      - date_added
-      - date_updated
-      - id
-      - rating
-      - recipe_id
-      filter: {}
-      limit: 20
-      allow_aggregations: true
-  - role: unverified
-    permission:
-      columns:
-      - id
-      - barista_id
-      - recipe_id
-      - rating
-      - comment
-      - date_added
-      - date_updated
-      filter: {}
-      limit: 20
-      allow_aggregations: true
-  update_permissions:
-  - role: barista
-    permission:
-      columns:
-      - barista_id
-      - comment
-      - date_updated
-      - id
-      - rating
-      - recipe_id
-      filter: {}
-      check: {}
-  delete_permissions:
-  - role: barista
-    permission:
-      filter: {}
-- table:
-    schema: public
-    name: recipes
+    name: recipe
   object_relationships:
   - name: barista
     using:
@@ -737,6 +645,98 @@
       filter:
         barista_id:
           _eq: x-hasura-barista-id
+- table:
+    schema: public
+    name: recipe_reviews
+  object_relationships:
+  - name: barista
+    using:
+      foreign_key_constraint_on: barista_id
+  - name: recipe
+    using:
+      foreign_key_constraint_on: recipe_id
+  insert_permissions:
+  - role: barista
+    permission:
+      check: {}
+      columns:
+      - barista_id
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - rating
+      - recipe_id
+      backend_only: false
+  select_permissions:
+  - role: all_barista
+    permission:
+      columns:
+      - id
+      - barista_id
+      - recipe_id
+      - rating
+      - comment
+      - date_added
+      - date_updated
+      filter: {}
+      limit: 20
+      allow_aggregations: true
+  - role: barista
+    permission:
+      columns:
+      - barista_id
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - rating
+      - recipe_id
+      filter: {}
+      limit: 20
+      allow_aggregations: true
+  - role: guest
+    permission:
+      columns:
+      - barista_id
+      - comment
+      - date_added
+      - date_updated
+      - id
+      - rating
+      - recipe_id
+      filter: {}
+      limit: 20
+      allow_aggregations: true
+  - role: unverified
+    permission:
+      columns:
+      - id
+      - barista_id
+      - recipe_id
+      - rating
+      - comment
+      - date_added
+      - date_updated
+      filter: {}
+      limit: 20
+      allow_aggregations: true
+  update_permissions:
+  - role: barista
+    permission:
+      columns:
+      - barista_id
+      - comment
+      - date_updated
+      - id
+      - rating
+      - recipe_id
+      filter: {}
+      check: {}
+  delete_permissions:
+  - role: barista
+    permission:
+      filter: {}
 - table:
     schema: public
     name: refresh_token
