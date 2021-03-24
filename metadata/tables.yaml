@@ -188,6 +188,7 @@
       - varietal
       filter: {}
       limit: 20
+      allow_aggregations: true
   - role: barista
     permission:
       columns:
@@ -210,6 +211,7 @@
       - varietal
       filter: {}
       limit: 20
+      allow_aggregations: true
   - role: guest
     permission:
       columns:
@@ -232,6 +234,7 @@
       - varietal
       filter: {}
       limit: 20
+      allow_aggregations: true
   - role: unverified
     permission:
       columns:
@@ -315,6 +318,7 @@
       - date_updated
       filter: {}
       limit: 20
+      allow_aggregations: true
   - role: barista
     permission:
       columns:
