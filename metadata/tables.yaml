@@ -296,6 +296,8 @@
   - role: barista
     permission:
       check: {}
+      set:
+        barista_id: x-hasura-barista-id
       columns:
       - barista_id
       - bean_id
@@ -362,18 +364,22 @@
   - role: barista
     permission:
       columns:
-      - barista_id
       - bean_id
       - comment
       - date_updated
-      - id
       - rating
-      filter: {}
+      filter:
+        barista_id:
+          _eq: x-hasura-barista-id
       check: {}
+      set:
+        barista_id: x-hasura-barista-id
   delete_permissions:
   - role: barista
     permission:
-      filter: {}
+      filter:
+        barista_id:
+          _eq: x-hasura-barista-id
 - table:
     schema: public
     name: brew_log
@@ -731,6 +737,8 @@
   - role: barista
     permission:
       check: {}
+      set:
+        barista_id: x-hasura-barista-id
       columns:
       - barista_id
       - comment
@@ -797,18 +805,22 @@
   - role: barista
     permission:
       columns:
-      - barista_id
       - comment
       - date_updated
-      - id
       - rating
       - recipe_id
-      filter: {}
+      filter:
+        barista_id:
+          _eq: x-hasura-barista-id
       check: {}
+      set:
+        barista_id: x-hasura-barista-id
   delete_permissions:
   - role: barista
     permission:
-      filter: {}
+      filter:
+        barista_id:
+          _eq: x-hasura-barista-id
 - table:
     schema: public
     name: refresh_token
