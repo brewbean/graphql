@@ -160,7 +160,6 @@
       - profile_note
       - img
       - about
-      - rating
       - price
       - date_added
       - date_updated
@@ -184,7 +183,6 @@
       - price
       - process
       - profile_note
-      - rating
       - region
       - roast_type
       - varietal
@@ -207,7 +205,6 @@
       - price
       - process
       - profile_note
-      - rating
       - region
       - roast_type
       - varietal
@@ -230,7 +227,6 @@
       - price
       - process
       - profile_note
-      - rating
       - region
       - roast_type
       - varietal
@@ -253,7 +249,6 @@
       - price
       - process
       - profile_note
-      - rating
       - region
       - roast_type
       - varietal
@@ -277,7 +272,6 @@
       - price
       - process
       - profile_note
-      - rating
       - region
       - roast_type
       - varietal
