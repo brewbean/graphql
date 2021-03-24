@@ -19,6 +19,13 @@
         column_mapping:
           id: barista_id
   array_relationships:
+  - name: authored_beans
+    using:
+      foreign_key_constraint_on:
+        column: author_id
+        table:
+          schema: public
+          name: bean
   - name: bean_reviews
     using:
       foreign_key_constraint_on:
@@ -114,6 +121,10 @@
 - table:
     schema: public
     name: bean
+  object_relationships:
+  - name: author
+    using:
+      foreign_key_constraint_on: author_id
   array_relationships:
   - name: bean_reviews
     using:
@@ -129,9 +140,12 @@
         table:
           schema: public
           name: recipe
-  select_permissions:
-  - role: all_barista
+  insert_permissions:
+  - role: barista
     permission:
+      check: {}
+      set:
+        author_id: x-hasura-barista-id
       columns:
       - id
       - name
@@ -150,6 +164,30 @@
       - price
       - date_added
       - date_updated
+      - author_id
+      backend_only: false
+  select_permissions:
+  - role: all_barista
+    permission:
+      columns:
+      - about
+      - altitude
+      - author_id
+      - company_name
+      - country_id
+      - date_added
+      - date_updated
+      - farm_id
+      - id
+      - img
+      - name
+      - price
+      - process
+      - profile_note
+      - rating
+      - region
+      - roast_type
+      - varietal
       filter: {}
       limit: 20
   - role: barista
@@ -157,6 +195,7 @@
       columns:
       - about
       - altitude
+      - author_id
       - company_name
       - country_id
       - date_added
@@ -179,6 +218,7 @@
       columns:
       - about
       - altitude
+      - author_id
       - company_name
       - country_id
       - date_added
@@ -199,26 +239,52 @@
   - role: unverified
     permission:
       columns:
-      - id
-      - name
-      - company_name
-      - roast_type
-      - country_id
-      - farm_id
-      - process
-      - region
-      - varietal
-      - altitude
-      - profile_note
-      - img
       - about
-      - rating
-      - price
+      - altitude
+      - author_id
+      - company_name
+      - country_id
       - date_added
       - date_updated
+      - farm_id
+      - id
+      - img
+      - name
+      - price
+      - process
+      - profile_note
+      - rating
+      - region
+      - roast_type
+      - varietal
       filter: {}
       limit: 20
       allow_aggregations: true
+  update_permissions:
+  - role: barista
+    permission:
+      columns:
+      - about
+      - altitude
+      - company_name
+      - country_id
+      - date_added
+      - date_updated
+      - farm_id
+      - id
+      - img
+      - name
+      - price
+      - process
+      - profile_note
+      - rating
+      - region
+      - roast_type
+      - varietal
+      filter:
+        author_id:
+          _eq: x-hasura-barista-id
+      check: null
 - table:
     schema: public
     name: bean_review
