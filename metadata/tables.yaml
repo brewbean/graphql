@@ -140,6 +140,32 @@
         table:
           schema: public
           name: recipe
+  insert_permissions:
+  - role: barista
+    permission:
+      check: {}
+      set:
+        author_id: x-hasura-barista-id
+      columns:
+      - id
+      - name
+      - company_name
+      - roast_type
+      - country_id
+      - farm_id
+      - process
+      - region
+      - varietal
+      - altitude
+      - profile_note
+      - img
+      - about
+      - rating
+      - price
+      - date_added
+      - date_updated
+      - author_id
+      backend_only: false
   select_permissions:
   - role: all_barista
     permission:
@@ -234,6 +260,31 @@
       filter: {}
       limit: 20
       allow_aggregations: true
+  update_permissions:
+  - role: barista
+    permission:
+      columns:
+      - about
+      - altitude
+      - company_name
+      - country_id
+      - date_added
+      - date_updated
+      - farm_id
+      - id
+      - img
+      - name
+      - price
+      - process
+      - profile_note
+      - rating
+      - region
+      - roast_type
+      - varietal
+      filter:
+        author_id:
+          _eq: x-hasura-barista-id
+      check: null
 - table:
     schema: public
     name: bean_review
