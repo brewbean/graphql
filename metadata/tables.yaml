@@ -491,6 +491,23 @@
       limit: 20
       allow_aggregations: true
   update_permissions:
+  - role: all_barista
+    permission:
+      columns:
+      - comment
+      - date_created
+      - id
+      - is_private
+      - rating
+      - recipe_id
+      - template_recipe_id
+      - title
+      filter:
+        barista_id:
+          _eq: x-hasura-barista-id
+      check:
+        barista_id:
+          _eq: x-hasura-barista-id
   - role: barista
     permission:
       columns:
