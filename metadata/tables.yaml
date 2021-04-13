@@ -394,6 +394,24 @@
     using:
       foreign_key_constraint_on: template_recipe_id
   insert_permissions:
+  - role: all_barista
+    permission:
+      check:
+        barista_id:
+          _eq: x-hasura-barista-id
+      set:
+        barista_id: x-hasura-barista-id
+      columns:
+      - barista_id
+      - comment
+      - date_created
+      - id
+      - is_private
+      - rating
+      - recipe_id
+      - template_recipe_id
+      - title
+      backend_only: false
   - role: barista
     permission:
       check:
