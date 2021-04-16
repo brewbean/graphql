@@ -147,45 +147,47 @@
       set:
         author_id: x-hasura-barista-id
       columns:
-      - id
-      - name
-      - company_name
-      - roast_type
-      - country_id
-      - farm_id
-      - process
-      - region
-      - varietal
-      - altitude
-      - profile_note
-      - img
       - about
-      - price
+      - altitude
+      - author_id
+      - company_name
+      - country_id
       - date_added
       - date_updated
-      - author_id
+      - farm_id
+      - id
+      - img
+      - name
+      - price
+      - process
+      - profile_note
+      - purchase_info
+      - region
+      - roast_type
+      - varietal
       backend_only: false
   select_permissions:
   - role: all_barista
     permission:
       columns:
-      - about
-      - altitude
-      - author_id
+      - id
+      - name
       - company_name
+      - roast_type
       - country_id
+      - farm_id
+      - process
+      - region
+      - varietal
+      - img
+      - about
+      - price
       - date_added
       - date_updated
-      - farm_id
-      - id
-      - img
-      - name
-      - price
-      - process
+      - author_id
+      - altitude
       - profile_note
-      - region
-      - roast_type
-      - varietal
+      - purchase_info
       filter: {}
       limit: 20
       allow_aggregations: true
@@ -206,6 +208,7 @@
       - price
       - process
       - profile_note
+      - purchase_info
       - region
       - roast_type
       - varietal
@@ -229,6 +232,7 @@
       - price
       - process
       - profile_note
+      - purchase_info
       - region
       - roast_type
       - varietal
@@ -252,6 +256,7 @@
       - price
       - process
       - profile_note
+      - purchase_info
       - region
       - roast_type
       - varietal
@@ -275,6 +280,7 @@
       - price
       - process
       - profile_note
+      - purchase_info
       - region
       - roast_type
       - varietal
