@@ -148,7 +148,8 @@
         author_id: x-hasura-barista-id
       columns:
       - about
-      - altitude
+      - altitude_start
+      - altitude_end
       - author_id
       - company_name
       - country_id
@@ -185,7 +186,8 @@
       - date_added
       - date_updated
       - author_id
-      - altitude
+      - altitude_start
+      - altitude_end
       - profile_note
       - purchase_info
       filter: {}
@@ -195,7 +197,8 @@
     permission:
       columns:
       - about
-      - altitude
+      - altitude_start
+      - altitude_end
       - author_id
       - company_name
       - country_id
@@ -219,7 +222,8 @@
     permission:
       columns:
       - about
-      - altitude
+      - altitude_start
+      - altitude_end
       - author_id
       - company_name
       - country_id
@@ -243,7 +247,8 @@
     permission:
       columns:
       - about
-      - altitude
+      - altitude_start
+      - altitude_end
       - author_id
       - company_name
       - country_id
@@ -268,7 +273,8 @@
     permission:
       columns:
       - about
-      - altitude
+      - altitude_start
+      - altitude_end
       - company_name
       - country_id
       - date_added
