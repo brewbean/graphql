@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install Heroku
-        run: sudo apt-get update && sudo apt-get install heroku
+        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 
       - name: Copy DB from Prod to Stage [DESTRUCTIVE]
         run: heroku pg:copy ${{ env.PROD_APP_NAME }}::DATABASE_URL DATABASE_URL --app ${{ env.STAGE_APP_NAME }} --confirm ${{ env.STAGE_APP_NAME }}
