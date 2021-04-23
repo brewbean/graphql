@@ -637,22 +637,23 @@
   - role: all_barista
     permission:
       columns:
-      - is_private
-      - barista_id
-      - bean_id
-      - bean_weight
-      - id
-      - water_amount
-      - water_temp
       - about
+      - barista_id
       - bean_grind
+      - bean_id
       - bean_name_free
+      - bean_weight
       - brew_type
-      - device
-      - instructions
-      - name
       - date_added
       - date_updated
+      - device
+      - id
+      - instructions
+      - is_deleted
+      - is_private
+      - name
+      - water_amount
+      - water_temp
       filter:
         _or:
         - is_private:
@@ -676,6 +677,7 @@
       - device
       - id
       - instructions
+      - is_deleted
       - is_private
       - name
       - water_amount
@@ -703,6 +705,7 @@
       - device
       - id
       - instructions
+      - is_deleted
       - is_private
       - name
       - water_amount
@@ -727,6 +730,7 @@
       - device
       - id
       - instructions
+      - is_deleted
       - is_private
       - name
       - water_amount
@@ -754,6 +758,7 @@
       - device
       - id
       - instructions
+      - is_deleted
       - is_private
       - name
       - water_amount
@@ -762,12 +767,6 @@
         barista_id:
           _eq: x-hasura-barista-id
       check:
-        barista_id:
-          _eq: x-hasura-barista-id
-  delete_permissions:
-  - role: barista
-    permission:
-      filter:
         barista_id:
           _eq: x-hasura-barista-id
 - table:
