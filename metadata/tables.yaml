@@ -118,6 +118,20 @@
         id:
           _eq: x-hasura-barista-id
       limit: 20
+  event_triggers:
+  - name: new_user
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: NEW_USER_WEBHOOK
+    headers:
+    - name: origin
+      value_from_env: DOMAIN
 - table:
     schema: public
     name: bean
