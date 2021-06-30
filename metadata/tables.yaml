@@ -40,6 +40,13 @@
         table:
           schema: public
           name: brew_log
+  - name: cafe_reviews
+    using:
+      foreign_key_constraint_on:
+        column: barista_id
+        table:
+          schema: public
+          name: cafe_review
   - name: password_reset_codes
     using:
       foreign_key_constraint_on:
@@ -569,6 +576,185 @@
       check:
         barista_id:
           _eq: x-hasura-barista-id
+  delete_permissions:
+  - role: barista
+    permission:
+      filter:
+        barista_id:
+          _eq: x-hasura-barista-id
+- table:
+    schema: public
+    name: cafe
+  array_relationships:
+  - name: cafe_reviews
+    using:
+      foreign_key_constraint_on:
+        column: cafe_id
+        table:
+          schema: public
+          name: cafe_review
+  select_permissions:
+  - role: all_barista
+    permission:
+      columns:
+      - id
+      - slug
+      - content
+      - phone_number
+      - tags
+      - name
+      - location
+      - location_link
+      - hours
+      - pictures
+      - site_text
+      - site_link
+      - city
+      - social
+      filter: {}
+      allow_aggregations: true
+  - role: barista
+    permission:
+      columns:
+      - id
+      - slug
+      - content
+      - phone_number
+      - tags
+      - name
+      - location
+      - location_link
+      - hours
+      - pictures
+      - site_text
+      - site_link
+      - city
+      - social
+      filter: {}
+      allow_aggregations: true
+  - role: guest
+    permission:
+      columns:
+      - id
+      - slug
+      - content
+      - phone_number
+      - tags
+      - name
+      - location
+      - location_link
+      - hours
+      - pictures
+      - site_text
+      - site_link
+      - city
+      - social
+      filter: {}
+      allow_aggregations: true
+  - role: unverified
+    permission:
+      columns:
+      - id
+      - slug
+      - content
+      - phone_number
+      - tags
+      - name
+      - location
+      - location_link
+      - hours
+      - pictures
+      - site_text
+      - site_link
+      - city
+      - social
+      filter: {}
+      allow_aggregations: true
+- table:
+    schema: public
+    name: cafe_review
+  object_relationships:
+  - name: barista
+    using:
+      foreign_key_constraint_on: barista_id
+  - name: cafe
+    using:
+      foreign_key_constraint_on: cafe_id
+  insert_permissions:
+  - role: barista
+    permission:
+      check: {}
+      set:
+        barista_id: x-hasura-barista-id
+      columns:
+      - thumb_up
+      - barista_id
+      - cafe_id
+      - id
+      - comment
+      - date_added
+      - date_updated
+      backend_only: false
+  select_permissions:
+  - role: all_barista
+    permission:
+      columns:
+      - id
+      - barista_id
+      - cafe_id
+      - thumb_up
+      - comment
+      - date_added
+      - date_updated
+      filter: {}
+      allow_aggregations: true
+  - role: barista
+    permission:
+      columns:
+      - id
+      - barista_id
+      - cafe_id
+      - thumb_up
+      - comment
+      - date_added
+      - date_updated
+      filter: {}
+      allow_aggregations: true
+  - role: guest
+    permission:
+      columns:
+      - id
+      - barista_id
+      - cafe_id
+      - thumb_up
+      - comment
+      - date_added
+      - date_updated
+      filter: {}
+      allow_aggregations: true
+  - role: unverified
+    permission:
+      columns:
+      - id
+      - barista_id
+      - cafe_id
+      - thumb_up
+      - comment
+      - date_added
+      - date_updated
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: barista
+    permission:
+      columns:
+      - comment
+      - date_updated
+      - thumb_up
+      filter: {}
+      check: {}
+      set:
+        barista_id: x-hasura-barista-id
   delete_permissions:
   - role: barista
     permission:
